@@ -1,26 +1,334 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ========================================
+   LIGHT MODE
+   ======================================== */
+
+:root {
+  --background: #FFFEFC;
+  --foreground: #252334;
+
+  --card: #F8F7F4;
+  --card-foreground: #252334;
+
+  --popover: #F8F7F4;
+  --popover-foreground: #252334;
+
+  --primary: #190399;
+  --primary-foreground: #FFFEFC;
+
+  --secondary: #FFDE59;
+  --secondary-foreground: #252334;
+
+  --muted: #F8F7F4;
+  --muted-foreground: #77758A;
+
+  --accent: #FF498C;
+  --accent-foreground: #FFFEFC;
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: #E7E3EF;
+  --input: #E7E3EF;
+  --ring: #FF498C;
+
+  --chart-1: #190399;
+  --chart-2: #FF498C;
+  --chart-3: #F7A0BD;
+  --chart-4: #FFDE59;
+  --chart-5: #77758A;
+
+  --radius: 1rem;
+
+  --sidebar: #F8F7F4;
+  --sidebar-foreground: #252334;
+
+  --sidebar-primary: #190399;
+  --sidebar-primary-foreground: #FFFEFC;
+
+  --sidebar-accent: #FF498C;
+  --sidebar-accent-foreground: #FFFEFC;
+
+  --sidebar-border: #E7E3EF;
+  --sidebar-ring: #FF498C;
+}
+
+/* ========================================
+   DARK MODE
+   Tetap sama seperti LIGHT MODE
+   ======================================== */
+
+.dark {
+  --background: #FFFEFC;
+  --foreground: #252334;
+
+  --card: #F8F7F4;
+  --card-foreground: #252334;
+
+  --popover: #F8F7F4;
+  --popover-foreground: #252334;
+
+  --primary: #190399;
+  --primary-foreground: #FFFEFC;
+
+  --secondary: #FFDE59;
+  --secondary-foreground: #252334;
+
+  --muted: #F8F7F4;
+  --muted-foreground: #77758A;
+
+  --accent: #FF498C;
+  --accent-foreground: #FFFEFC;
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: #E7E3EF;
+  --input: #E7E3EF;
+  --ring: #FF498C;
+
+  --chart-1: #190399;
+  --chart-2: #FF498C;
+  --chart-3: #F7A0BD;
+  --chart-4: #FFDE59;
+  --chart-5: #77758A;
+
+  --sidebar: #F8F7F4;
+  --sidebar-foreground: #252334;
+
+  --sidebar-primary: #190399;
+  --sidebar-primary-foreground: #FFFEFC;
+
+  --sidebar-accent: #FF498C;
+  --sidebar-accent-foreground: #FFFEFC;
+
+  --sidebar-border: #E7E3EF;
+  --sidebar-ring: #FF498C;
+}
+
+/* ========================================
+   BASE
+   ======================================== */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================
+   CUSTOM UTILITIES
+   ======================================== */
+
+@layer utilities {
+
+  /* ======================================
+     GRID BACKGROUND
+     ====================================== */
+
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(
+          in oklch,
+          var(--foreground) 7%,
+          transparent
+        ) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(
+          in oklch,
+          var(--foreground) 7%,
+          transparent
+        ) 1px,
+        transparent 1px
+      );
+
+    background-size: 44px 44px;
+  }
+
+  /* ======================================
+     RADIAL FADE
+     ====================================== */
+
+  .bg-radial-fade {
+    mask-image:
+      radial-gradient(
+        ellipse 65% 55% at 50% 0%,
+        #000 60%,
+        transparent 100%
+      );
+
+    -webkit-mask-image:
+      radial-gradient(
+        ellipse 65% 55% at 50% 0%,
+        #000 60%,
+        transparent 100%
+      );
+  }
+
+  /* ======================================
+     GRADIENT TEXT
+     ====================================== */
+
+  .text-gradient {
+    background-image:
+      linear-gradient(
+        135deg,
+        #190399 0%,
+        #190399 55%,
+        #3d20c9 100%
+      );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /*
+      Penting:
+      memberi ruang supaya huruf seperti
+      g, y, p, q tidak terpotong
+    */
+    line-height: 1.2 !important;
+    padding-bottom: 0.08em;
+
+    /*
+      Pastikan glyph tidak terpotong
+    */
+    overflow: visible;
+  }
+}
+
+/* ========================================
+   FADE UP ANIMATION
+   ======================================== */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation:
+    fade-up
+    0.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+/* ========================================
+   GLOW SPIN ANIMATION
+   ======================================== */
+
+@keyframes glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-glow-spin {
+  animation: glow-spin 4s linear infinite;
+}
+
+/* ========================================
+   BLOB ANIMATION
+   ======================================== */
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(20px, -30px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-15px, 15px) scale(0.95);
+  }
+}
+
+.animate-blob {
+  animation: blob 12s ease-in-out infinite;
 }
