@@ -7,6 +7,7 @@ import { useFavorite } from "@/context/FavoriteContext";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const links = [
   { href: "/", label: "Home" },
@@ -56,9 +57,12 @@ export default function Navbar() {
 
                 {link.href === "/favorites" &&
                   favorites.length > 0 && (
-                    <span className="ml-1">
+                    <Badge
+                      variant="secondary"
+                      className="ml-1 px-1.5 py-0 text-xs font-medium"
+                    >
                       ({favorites.length})
-                    </span>
+                    </Badge>
                   )}
               </Link>
             );
