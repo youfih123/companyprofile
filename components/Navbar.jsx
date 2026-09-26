@@ -56,8 +56,8 @@ export default function Navbar() {
 
                 {link.href === "/favorites" &&
                   favorites.length > 0 && (
-                    <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-primary px-1.5 py-0.5 text-xs font-semibold text-primary-foreground">
-                      {favorites.length}
+                    <span className="ml-1">
+                      ({favorites.length})
                     </span>
                   )}
               </Link>
