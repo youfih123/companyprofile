@@ -70,7 +70,7 @@ export default function Home() {
 
           {/* Hero Content */}
           <div className="animate-fade-up mx-auto max-w-3xl text-center">
-            {/* ================= BADGE ================= */}
+            {/* ================= BADGE (SUDAH DIPERBAIKI) ================= */}
             <div
               className="
                 mx-auto
@@ -80,17 +80,21 @@ export default function Home() {
                 gap-2
                 rounded-full
                 border
-                border-[#FF498C]/20
-                bg-[#FF498C]/10
+                border-pink-500/30
+                bg-pink-500/10
                 px-4
                 py-1.5
                 text-sm
                 font-medium
                 text-[#190399]
+                dark:text-pink-300
+                dark:border-pink-400/40
+                dark:bg-pink-500/20
                 backdrop-blur-sm
+                shadow-sm
               "
             >
-              <Sparkles className="size-3.5 text-[#190399]" />
+              <Sparkles className="size-3.5 text-[#190399] dark:text-pink-300" />
 
               Welcome to MyWebsite
             </div>
@@ -112,7 +116,7 @@ export default function Home() {
                 href="/services"
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "rounded-full bg-accent px-6 text-accent-foreground shadow-lg shadow-accent/30 hover:bg-primary"
+                  "rounded-full bg-accent px-6 text-accent-foreground shadow-lg shadow-accent/30 hover:bg-primary transition-all duration-200"
                 )}
               >
                 Explore Services
@@ -120,6 +124,7 @@ export default function Home() {
                 <ArrowRight className="size-4" />
               </Link>
 
+              {/* ================= TOMBOL CONTACT US (SUDAH DIPERBAIKI) ================= */}
               <Link
                 href="/contact"
                 className={cn(
@@ -127,7 +132,7 @@ export default function Home() {
                     variant: "outline",
                     size: "lg",
                   }),
-                  "rounded-full border-border px-6 text-foreground hover:bg-secondary/30"
+                  "rounded-full border-2 border-slate-300/60 dark:border-slate-500/80 bg-background/50 dark:bg-slate-800/80 px-6 text-foreground font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 dark:hover:border-slate-400 transition-all duration-200 shadow-sm"
                 )}
               >
                 Contact Us

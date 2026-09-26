@@ -113,55 +113,54 @@
 }
 
 /* ========================================
-   DARK MODE
-   Tetap sama seperti LIGHT MODE
+   DARK MODE (Soft Pastel Night Palette)
    ======================================== */
 
 .dark {
-  --background: #FFFEFC;
-  --foreground: #252334;
+  --background: #20243D;         /* Background utama */
+  --foreground: #F1F3F8;         /* Teks utama */
 
-  --card: #F8F7F4;
-  --card-foreground: #252334;
+  --card: #2A2F4A;               /* Card */
+  --card-foreground: #F1F3F8;
 
-  --popover: #F8F7F4;
-  --popover-foreground: #252334;
+  --popover: #2A2F4A;
+  --popover-foreground: #F1F3F8;
 
-  --primary: #190399;
-  --primary-foreground: #FFFEFC;
+  --primary: #7479D6;            /* Biru lembut */
+  --primary-foreground: #20243D;
 
-  --secondary: #FFDE59;
-  --secondary-foreground: #252334;
+  --secondary: #F5D96B;          /* Kuning lembut */
+  --secondary-foreground: #20243D;
 
-  --muted: #F8F7F4;
-  --muted-foreground: #77758A;
+  --muted: #2A2F4A;
+  --muted-foreground: #B8BED0;   /* Teks sekunder */
 
-  --accent: #FF498C;
-  --accent-foreground: #FFFEFC;
+  --accent: #F47AA7;             /* Pink lembut */
+  --accent-foreground: #20243D;
 
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.62 0.18 22.0);
 
-  --border: #E7E3EF;
-  --input: #E7E3EF;
-  --ring: #FF498C;
+  --border: #343A5B;             /* Garis batas disesuaikan dengan tone biru gelap */
+  --input: #343A5B;
+  --ring: #7479D6;
 
-  --chart-1: #190399;
-  --chart-2: #FF498C;
-  --chart-3: #F7A0BD;
-  --chart-4: #FFDE59;
-  --chart-5: #77758A;
+  --chart-1: #7479D6;            /* Biru lembut */
+  --chart-2: #F47AA7;            /* Pink lembut */
+  --chart-3: #F5D96B;            /* Kuning lembut */
+  --chart-4: #B8BED0;            /* Teks sekunder */
+  --chart-5: #343A5B;
 
-  --sidebar: #F8F7F4;
-  --sidebar-foreground: #252334;
+  --sidebar: #1A1D33;
+  --sidebar-foreground: #F1F3F8;
 
-  --sidebar-primary: #190399;
-  --sidebar-primary-foreground: #FFFEFC;
+  --sidebar-primary: #7479D6;
+  --sidebar-primary-foreground: #20243D;
 
-  --sidebar-accent: #FF498C;
-  --sidebar-accent-foreground: #FFFEFC;
+  --sidebar-accent: #2A2F4A;
+  --sidebar-accent-foreground: #F1F3F8;
 
-  --sidebar-border: #E7E3EF;
-  --sidebar-ring: #FF498C;
+  --sidebar-border: #343A5B;
+  --sidebar-ring: #7479D6;
 }
 
 /* ========================================
@@ -200,7 +199,7 @@
         to right,
         color-mix(
           in oklch,
-          var(--foreground) 7%,
+          var(--foreground) 6%,
           transparent
         ) 1px,
         transparent 1px
@@ -209,7 +208,7 @@
         to bottom,
         color-mix(
           in oklch,
-          var(--foreground) 7%,
+          var(--foreground) 6%,
           transparent
         ) 1px,
         transparent 1px
@@ -257,23 +256,26 @@
     color: transparent;
     -webkit-text-fill-color: transparent;
 
-    /*
-      Penting:
-      memberi ruang supaya huruf seperti
-      g, y, p, q tidak terpotong
-    */
     line-height: 1.2 !important;
     padding-bottom: 0.08em;
 
-    /*
-      Pastikan glyph tidak terpotong
-    */
     overflow: visible;
+  }
+
+  /* Gradient Text Mode Malam (Kombinasi Biru, Pink, dan Kuning Lembut) */
+  .dark .text-gradient {
+    background-image:
+      linear-gradient(
+        135deg,
+        #7479D6 0%,
+        #F47AA7 50%,
+        #F5D96B 100%
+      );
   }
 }
 
 /* ========================================
-   FADE UP ANIMATION
+   ANIMATIONS
    ======================================== */
 
 @keyframes fade-up {
@@ -289,16 +291,8 @@
 }
 
 .animate-fade-up {
-  animation:
-    fade-up
-    0.7s
-    cubic-bezier(0.16, 1, 0.3, 1)
-    both;
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
-/* ========================================
-   GLOW SPIN ANIMATION
-   ======================================== */
 
 @keyframes glow-spin {
   to {
@@ -310,20 +304,13 @@
   animation: glow-spin 4s linear infinite;
 }
 
-/* ========================================
-   BLOB ANIMATION
-   ======================================== */
-
 @keyframes blob {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(0, 0) scale(1);
   }
-
   33% {
     transform: translate(20px, -30px) scale(1.1);
   }
-
   66% {
     transform: translate(-15px, 15px) scale(0.95);
   }
