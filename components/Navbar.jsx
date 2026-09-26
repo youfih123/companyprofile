@@ -1,9 +1,11 @@
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { useFavorite } from "@/context/FavoriteContext";
+import { useTheme } from "@/context/ThemeContext";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -23,6 +25,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { name, submitted } = useUser();
   const { favorites } = useFavorite();
+  const { darkMode, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-4 z-50 mx-auto w-full max-w-4xl px-4">
@@ -75,6 +78,17 @@ export default function Navbar() {
             Hi, {name} 👋
           </span>
         )}
+
+        {/* Dark / Light Mode Toggle */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+          title={darkMode ? "Light Mode" : "Dark Mode"}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:bg-foreground/10"
+        >
+          {darkMode ? "☀️" : "🌙"}
+        </button>
 
         {/* Contact Button */}
         <Link

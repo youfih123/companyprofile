@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 
 import { UserProvider } from "@/context/UserContext";
 import { FavoriteProvider } from "@/context/FavoriteContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const fontSans = localFont({
   src: [
@@ -31,19 +32,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={fontSans.variable}>
-      <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
-        <UserProvider>
-          <FavoriteProvider>
-            <Navbar />
+    <html lang="en" className={fontSans.variable} suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col bg-background text-foreground antialiased transition-colors duration-300">
+        <ThemeProvider>
+          <UserProvider>
+            <FavoriteProvider>
+              <Navbar />
 
-            <main className="flex-1">
-              {children}
-            </main>
+              <main className="flex-1">
+                {children}
+              </main>
 
-            <Footer />
-          </FavoriteProvider>
-        </UserProvider>
+              <Footer />
+            </FavoriteProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
