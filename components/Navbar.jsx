@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -28,8 +27,9 @@ export default function Navbar() {
   const { darkMode, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky top-4 z-50 mx-auto w-full max-w-4xl px-4">
-      <nav className="flex items-center justify-between gap-4 rounded-full border border-white/10 bg-background/70 px-4 py-2 shadow-lg shadow-black/20 backdrop-blur-xl">
+    /* DIPERBAIKI: max-w-4xl diubah ke max-w-6xl agar kotaknya memanjang */
+    <header className="sticky top-4 z-50 mx-auto w-full max-w-6xl px-4">
+      <nav className="flex items-center justify-between gap-4 rounded-full border border-white/10 bg-background/70 px-6 py-2 shadow-lg shadow-black/20 backdrop-blur-xl">
 
         {/* Logo */}
         <Link
@@ -72,34 +72,38 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Greeting */}
-        {submitted && (
-          <span className="whitespace-nowrap text-sm font-medium">
-            Hi, {name} 👋
-          </span>
-        )}
-
-        {/* Dark / Light Mode Toggle */}
-        <button
-          type="button"
-          onClick={toggleTheme}
-          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-          title={darkMode ? "Light Mode" : "Dark Mode"}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:bg-foreground/10"
-        >
-          {darkMode ? "☀️" : "🌙"}
-        </button>
-
-        {/* Contact Button */}
-        <Link
-          href="/contact"
-          className={cn(
-            buttonVariants({ size: "sm" }),
-            "rounded-full"
+        {/* DIPERBAIKI: Semua elemen kanan dibungkus div ini agar rapi dan tidak berantakan */}
+        <div className="flex items-center gap-3">
+          {/* Greeting */}
+          {submitted && (
+            <span className="whitespace-nowrap text-sm font-medium">
+              Hi, {name} 👋
+            </span>
           )}
-        >
-          Get in touch
-        </Link>
+
+          {/* Dark / Light Mode Toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            title={darkMode ? "Light Mode" : "Dark Mode"}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:bg-foreground/10"
+          >
+            {darkMode ? "☀️" : "🌙"}
+          </button>
+
+          {/* Contact Button */}
+          <Link
+            href="/contact"
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "rounded-full"
+            )}
+          >
+            Get in touch
+          </Link>
+        </div>
+
       </nav>
     </header>
   );
