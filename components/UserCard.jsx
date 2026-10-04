@@ -54,7 +54,7 @@ export default function UserCard({ user }) {
           </p>
 
           <p className="mt-1 text-sm text-muted-foreground">
-            {user.company.name}
+            {user.company?.name ?? "-"}
           </p>
 
           <Button
@@ -100,7 +100,7 @@ export default function UserCard({ user }) {
                 </p>
 
                 <p className="mt-1 text-sm font-medium">
-                  {user.company.name}
+                  {user.company?.name ?? "-"}
                 </p>
               </div>
 

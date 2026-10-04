@@ -18,6 +18,7 @@ const links = [
   { href: "/contact", label: "Contact" },
   { href: "/users", label: "Users" },
   { href: "/favorites", label: "Favorite" },
+  { href: "/messages", label: "Messages" },
 ];
 
 export default function Navbar() {

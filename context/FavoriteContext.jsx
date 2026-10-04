@@ -1,46 +1,75 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const FavoriteContext = createContext();
+const FavoriteContext = createContext(undefined);
 
 export function FavoriteProvider({ children }) {
   const [favorites, setFavorites] = useState([]);
 
-  const addFavorite = (user) => {
-    setFavorites((prev) => {
-      if (prev.some((item) => item.id === user.id)) {
-        return prev;
-      }
+  // GET
+  useEffect(() => {
+    fetch("/api/favorites")
+      .then((res) => res.json())
+      .then(setFavorites);
+  }, []);
 
-      return [...prev, user];
+  // POST
+  async function addFavorite(user) {
+    const res = await fetch("/api/favorites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
     });
-  };
 
-  const removeFavorite = (userId) => {
-    setFavorites((prev) =>
-      prev.filter((user) => user.id !== userId)
-    );
-  };
+    if (res.ok) {
+      const saved = await res.json();
+      setFavorites((prev) => [...prev, saved]);
+    }
+  }
 
-  const isFavorite = (userId) => {
-    return favorites.some((user) => user.id === userId);
-  };
+  // PATCH (baru): ubah note
+  async function updateNote(userId, note) {
+    const res = await fetch(`/api/favorites/${userId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ note }),
+    });
+
+    if (res.ok) {
+      const updated = await res.json();
+      setFavorites((prev) =>
+        prev.map((f) => (f.id === userId ? updated : f))
+      );
+    }
+  }
+
+  // DELETE
+  async function removeFavorite(userId) {
+    const res = await fetch(`/api/favorites/${userId}`, { method: "DELETE" });
+
+    if (res.ok) {
+      setFavorites((prev) => prev.filter((f) => f.id !== userId));
+    }
+  }
+
+  function isFavorite(userId) {
+    return favorites.some((f) => f.id === userId);
+  }
+
+  const value = { favorites, addFavorite, updateNote, removeFavorite, isFavorite };
 
   return (
-    <FavoriteContext.Provider
-      value={{
-        favorites,
-        addFavorite,
-        removeFavorite,
-        isFavorite,
-      }}
-    >
+    <FavoriteContext.Provider value={value}>
       {children}
     </FavoriteContext.Provider>
   );
 }
 
 export function useFavorite() {
-  return useContext(FavoriteContext);
+  const context = useContext(FavoriteContext);
+  if (context === undefined) {
+    throw new Error("useFavorite harus dipakai di dalam <FavoriteProvider>");
+  }
+  return context;
 }
