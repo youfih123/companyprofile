@@ -1,6 +1,6 @@
 "use server";
 
-import { messages } from "@/lib/db";
+import { addMessage } from "@/lib/messagesStore";
 
 export async function submitContactForm(formData) {
   const name = formData.get("name");
@@ -11,13 +11,7 @@ export async function submitContactForm(formData) {
     return { success: false, error: "Semua field wajib diisi." };
   }
 
-  messages.push({
-    id: Date.now(),
-    name,
-    email,
-    message,
-    createdAt: new Date().toISOString(),
-  });
+  await addMessage({ name, email, message });
 
   return { success: true };
 }

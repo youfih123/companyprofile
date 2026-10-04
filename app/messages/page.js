@@ -1,7 +1,11 @@
-import { messages } from "@/lib/db";
+import { getMessages } from "@/lib/messagesStore";
 import { deleteMessageAction } from "./actions";
 
-export default function MessagesPage() {
+export const dynamic = "force-dynamic";
+
+export default async function MessagesPage() {
+  const messages = await getMessages();
+
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
       <h1 className="text-3xl font-bold">Pesan Masuk</h1>
