@@ -1,14 +1,9 @@
-import { favorites } from "@/lib/db";
-import { removeFavorite } from "@/lib/services/favoriteService";
 
-// PATCH: ubah note pada favorite (tidak diubah)
+import { removeFavorite, updateFavoriteNote } from "@/lib/services/favoriteService";
+
+// PATCH: ubah note pada favorite
 export async function PATCH(request, { params }) {
   const { id } = await params;
-  const favorite = favorites.find((f) => String(f.id) === String(id));
-
-  if (!favorite) {
-    return Response.json({ error: "Data tidak ditemukan" }, { status: 404 });
-  }
 
   let body;
   try {
@@ -27,18 +22,22 @@ export async function PATCH(request, { params }) {
     );
   }
 
-  favorite.note = body.note;
-  return Response.json(favorite);
-}
-
-// DELETE: sekarang lewat Service
-export async function DELETE(request, { params }) {
-  const { id } = await params;
-  const result = removeFavorite(id);
+  const result = await updateFavoriteNote(id, body.note);
 
   if (!result.success) {
     return Response.json({ error: result.error }, { status: result.status });
   }
 
-  return Response.json({ message: "Berhasil dihapus" });
+  return Response.json(result.data);
+}
+
+export async function DELETE(request, { params }) {
+  const { id } = await params;
+  const result = await removeFavorite(id);
+
+  if (!result.success) {
+    return Response.json({ error: result.error }, { status: result.status });
+  }
+
+  return Response.json({ message: result.message });
 }
