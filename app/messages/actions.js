@@ -1,10 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { deleteMessage } from "@/lib/messagesStore";
+import { supabase } from "@/lib/supabase";
 
 export async function deleteMessageAction(formData) {
-  const id = String(formData.get("id"));
-  await deleteMessage(id);
+  const id = formData.get("id");
+
+  const { error } = await supabase.from("messages").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+
   revalidatePath("/messages");
 }
