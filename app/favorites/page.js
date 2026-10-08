@@ -6,6 +6,8 @@ import { useFavorite } from "@/context/FavoriteContext";
 export default function FavoritesPage() {
   const { favorites } = useFavorite();
 
+  const validFavorites = favorites.filter((favorite) => favorite.app_users);
+
   return (
     <section className="relative">
       <div className="bg-grid bg-radial-fade absolute inset-0 -z-10" />
@@ -25,7 +27,7 @@ export default function FavoritesPage() {
           </p>
         </div>
 
-        {favorites.length === 0 ? (
+        {validFavorites.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-white/10 bg-foreground/[0.03] p-10 text-center">
             <p className="text-muted-foreground">
               Belum ada user yang ditambahkan ke Favorite.
@@ -37,10 +39,15 @@ export default function FavoritesPage() {
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {favorites.map((user) => (
+            {validFavorites.map((favorite) => (
               <UserCard
-                key={user.id}
-                user={user}
+                key={favorite.id}
+                user={{
+                  id: favorite.app_users.id,
+                  name: favorite.app_users.name,
+                  email: favorite.app_users.email,
+                  company: { name: favorite.app_users.company_name },
+                }}
               />
             ))}
           </div>
