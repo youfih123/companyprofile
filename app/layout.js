@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { UserProvider } from "@/context/UserContext";
 import { FavoriteProvider } from "@/context/FavoriteContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { createClient } from "@/lib/supabase/server";
 
 const fontSans = localFont({
   src: [
@@ -30,22 +32,29 @@ export const metadata = {
     "We help individuals and businesses build modern, simple, and useful digital experiences.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html lang="en" className={fontSans.variable} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-background text-foreground antialiased transition-colors duration-300">
         <ThemeProvider>
-          <UserProvider>
-            <FavoriteProvider>
-              <Navbar />
+          <AuthProvider user={user}>
+            <UserProvider>
+              <FavoriteProvider>
+                <Navbar />
 
-              <main className="flex-1">
-                {children}
-              </main>
+                <main className="flex-1">
+                  {children}
+                </main>
 
-              <Footer />
-            </FavoriteProvider>
-          </UserProvider>
+                <Footer />
+              </FavoriteProvider>
+            </UserProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

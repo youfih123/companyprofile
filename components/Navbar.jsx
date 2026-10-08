@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/context/UserContext";
+import { useAuth } from "@/context/AuthContext";
 import { useFavorite } from "@/context/FavoriteContext";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -23,12 +23,14 @@ const links = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { name, submitted } = useUser();
+  const { user, loading } = useAuth();
   const { favorites } = useFavorite();
   const { darkMode, toggleTheme } = useTheme();
 
+  // Tampilkan bagian sebelum "@" saja supaya navbar tidak terlalu lebar
+  const displayName = user?.email?.split("@")[0];
+
   return (
-    /* DIPERBAIKI: max-w-4xl diubah ke max-w-6xl agar kotaknya memanjang */
     <header className="sticky top-4 z-50 mx-auto w-full max-w-6xl px-4">
       <nav className="flex items-center justify-between gap-4 rounded-full border border-white/10 bg-background/70 px-6 py-2 shadow-lg shadow-black/20 backdrop-blur-xl">
 
@@ -73,14 +75,39 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* DIPERBAIKI: Semua elemen kanan dibungkus div ini agar rapi dan tidak berantakan */}
+        {/* Semua elemen kanan dibungkus div ini agar rapi */}
         <div className="flex items-center gap-3">
-          {/* Greeting */}
-          {submitted && (
-            <span className="whitespace-nowrap text-sm font-medium">
-              Hi, {name} 👋
-            </span>
-          )}
+          {/* Status login */}
+          {!loading &&
+            (user ? (
+              <>
+                <span className="whitespace-nowrap text-sm font-medium">
+                  Hi, {displayName} 👋
+                </span>
+
+                <form action="/auth/signout" method="post">
+                  <button
+                    type="submit"
+                    className={cn(
+                      buttonVariants({ size: "sm", variant: "outline" }),
+                      "rounded-full"
+                    )}
+                  >
+                    Logout
+                  </button>
+                </form>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className={cn(
+                  buttonVariants({ size: "sm", variant: "outline" }),
+                  "rounded-full"
+                )}
+              >
+                Login
+              </Link>
+            ))}
 
           {/* Dark / Light Mode Toggle */}
           <button
