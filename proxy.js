@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/proxy";
 
 // Halaman yang wajib login
-const protectedPaths = ["/messages"];
+const protectedPaths = ["/messages", "/favorites"];
 
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
